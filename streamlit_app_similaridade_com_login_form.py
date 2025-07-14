@@ -26,13 +26,26 @@ def carregar_base_atg():
 
 # --- APP PRINCIPAL ---
 st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
+
 # URL da logo no GitHub (substitua com o link correto da sua imagem)
 logo_url = "https://github.com/pricing-atg/streamlit-similaridade/raw/4bcf776247121b42c59395f37c04d836192332d1/Maxpar%2BGrupo-Autoglass.png"
 
-# Exibindo a logo no canto superior direito
-col1, col2, col3 = st.columns([1, 8, 1])  # Criando 3 colunas
-with col2:
-    st.image(logo_url, use_column_width=True)
+# Adicionando a logo no canto superior direito usando CSS
+st.markdown(
+    f"""
+    <style>
+        .logo {{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }}
+    </style>
+    <div class="logo">
+        <img src="{logo_url}" width="150" />
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 tab1, tab2 = st.tabs(["Rotina 1", "Rotina 2 (Base ATG)"])
 
 with tab1:
