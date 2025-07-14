@@ -61,14 +61,14 @@ if not st.session_state["autenticado"]:
                 if usuario == USUARIO and senha == SENHA:
                     st.session_state["autenticado"] = True
                     st.success("Login bem-sucedido! ✅")
-                    st.experimental_rerun()  # Recarrega a página após login
                 else:
                     st.error("Usuário ou senha inválidos.")
-    st.stop()  # Para impedir que o conteúdo do app apareça antes do login
+    st.stop()  # Impede que o conteúdo do app apareça antes do login
 
 # --- APP PRINCIPAL ---
-st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
-tab1, tab2 = st.tabs(["Rotina 1", "Rotina 2 (Base ATG)"])
+if st.session_state["autenticado"]:
+    st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
+    tab1, tab2 = st.tabs(["Rotina 1", "Rotina 2 (Base ATG)"])
 
 with tab1:
     st.header("Rotina 1")
