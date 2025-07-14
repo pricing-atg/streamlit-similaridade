@@ -46,20 +46,25 @@ if "autenticado" not in st.session_state:
     st.session_state["autenticado"] = False
 
 if not st.session_state["autenticado"]:
-    st.title("🔐 Login")
-    with st.form("login_form"):
-        usuario = st.text_input("Usuário")
-        senha = st.text_input("Senha", type="password")
-        submit = st.form_submit_button("Entrar")
+    with st.spinner("Aguarde..."):
+        st.markdown("<h2 style='text-align: center;'>🔐 Tela de Login</h2>", unsafe_allow_html=True)
+        
+        # Título
+        st.markdown("### Informe as credenciais para acessar:")
+        
+        with st.form("login_form"):
+            usuario = st.text_input("Usuário", placeholder="Digite o usuário")
+            senha = st.text_input("Senha", type="password", placeholder="Digite a senha")
+            submit = st.form_submit_button("Entrar")
 
-        if submit:
-            if usuario == USUARIO and senha == SENHA:
-                st.session_state["autenticado"] = True
-            else:
-                st.error("Usuário ou senha inválidos.")
-
-if not st.session_state["autenticado"]:
-    st.stop()
+            if submit:
+                if usuario == USUARIO and senha == SENHA:
+                    st.session_state["autenticado"] = True
+                    st.success("Login bem-sucedido! ✅")
+                    st.experimental_rerun()  # Recarrega a página após login
+                else:
+                    st.error("Usuário ou senha inválidos.")
+    st.stop()  # Para impedir que o conteúdo do app apareça antes do login
 
 # --- APP PRINCIPAL ---
 st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
