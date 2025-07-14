@@ -1,26 +1,9 @@
 
-# Auto-instalação de pacotes
-import subprocess
-import sys
-
-def instalar(pacote):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", pacote])
-
-for pacote in ["streamlit", "pandas", "openpyxl", "rapidfuzz"]:
-    try:
-        __import__(pacote)
-    except ImportError:
-        instalar(pacote)
-
 import streamlit as st
 import pandas as pd
 from rapidfuzz import fuzz
 from openpyxl import Workbook
 from io import BytesIO
-
-# Login fixo
-USUARIO = "MF_Pricing"
-SENHA = "Pricing"
 
 def limpar_texto(texto):
     return ''.join(e for e in str(texto).lower() if e.isalnum() or e.isspace())
@@ -41,34 +24,9 @@ def similaridade_combinada(modelo, lista_modelos):
 def carregar_base_atg():
     return pd.read_excel("baseatg.xlsx")
 
-# --- LOGIN ---
-if "autenticado" not in st.session_state:
-    st.session_state["autenticado"] = False
-
-if not st.session_state["autenticado"]:
-    with st.spinner("Aguarde..."):
-        st.markdown("<h2 style='text-align: center;'>🔐 Tela de Login</h2>", unsafe_allow_html=True)
-        
-        # Título
-        st.markdown("### Informe as credenciais para acessar:")
-        
-        with st.form("login_form"):
-            usuario = st.text_input("Usuário", placeholder="Digite o usuário")
-            senha = st.text_input("Senha", type="password", placeholder="Digite a senha")
-            submit = st.form_submit_button("Entrar")
-
-            if submit:
-                if usuario == USUARIO and senha == SENHA:
-                    st.session_state["autenticado"] = True
-                    st.success("Login bem-sucedido! ✅")
-                else:
-                    st.error("Usuário ou senha inválidos.")
-    st.stop()  # Impede que o conteúdo do app apareça antes do login
-
 # --- APP PRINCIPAL ---
-if st.session_state["autenticado"]:
-    st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
-    tab1, tab2 = st.tabs(["Rotina 1", "Rotina 2 (Base ATG)"])
+st.title("Preenchimento por Similaridade - Fipe, Montadora e Categoria")
+tab1, tab2 = st.tabs(["Rotina 1", "Rotina 2 (Base ATG)"])
 
 with tab1:
     st.header("Rotina 1")
