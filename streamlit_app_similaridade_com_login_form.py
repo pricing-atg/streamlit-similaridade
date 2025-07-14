@@ -46,19 +46,19 @@ if "autenticado" not in st.session_state:
     st.session_state["autenticado"] = False
 
 if not st.session_state["autenticado"]:
-    st.title("🔐 Login")
-    with st.form("login_form"):
-        usuario = st.text_input("Usuário")
-        senha = st.text_input("Senha", type="password")
-        submit = st.form_submit_button("Entrar")
+    with st.container():
+        st.markdown("### 🔐 Acesso restrito")
+        with st.form("login_form"):
+            usuario = st.text_input("Usuário")
+            senha = st.text_input("Senha", type="password")
+            submit = st.form_submit_button("Entrar")
 
-        if submit:
-            if usuario == USUARIO and senha == SENHA:
-                st.session_state["autenticado"] = True
-            else:
-                st.error("Usuário ou senha inválidos.")
-
-if not st.session_state["autenticado"]:
+            if submit:
+                if usuario == USUARIO and senha == SENHA:
+                    st.session_state["autenticado"] = True
+                    st.experimental_rerun()
+                else:
+                    st.error("Usuário ou senha inválidos.")
     st.stop()
 
 # --- APP PRINCIPAL ---
